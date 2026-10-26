@@ -17,15 +17,15 @@ function parseTweets(runkeeper_tweets) {
 			countsByType[type] = (countsByType[type] || 0) + 1;
 		}
 	}
- 
+
 	const activityCounts = [];
 	for (const type in countsByType) {
 		activityCounts.push({ activityType: type, count: countsByType[type] });
 	}
 	activityCounts.sort((a, b) => b.count - a.count);
- 
+
 	const topThree = [activityCounts[0].activityType, activityCounts[1].activityType, activityCounts[2].activityType];
- 
+
 	document.getElementById('numberActivities').innerText = activityCounts.length;
 	document.getElementById('firstMost').innerText = topThree[0];
 	document.getElementById('secondMost').innerText = topThree[1];
@@ -35,12 +35,12 @@ function parseTweets(runkeeper_tweets) {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "A graph of the number of Tweets containing each type of activity.",
 	  "data": {
-	    "values": tweet_array },
-		mark: 'bar',
-		encoding: {
-			x: { field: 'activityType', type: 'nominal', sort: '-y', title: 'Activity type' },
-			y: { field: 'count', type: 'quantitative', title: 'Number of Tweets' }
-		}
+	    "values": activityCounts
+	  },
+	  "mark": "bar",
+	  "encoding": {
+	    "x": { "field": "activityType", "type": "nominal", "sort": "-y", "title": "Activity type" },
+	    "y": { "field": "count", "type": "quantitative", "title": "Number of Tweets" }
 	  }
 	};
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
@@ -58,11 +58,11 @@ function parseTweets(runkeeper_tweets) {
 			});
 		}
 	}
- 
+
 	document.getElementById('longestActivityType').innerText = 'bike';
 	document.getElementById('shortestActivityType').innerText = 'walk';
 	document.getElementById('weekdayOrWeekendLonger').innerText = 'weekends';
- 
+
 	distance_vis_spec = {
 		$schema: 'https://vega.github.io/schema/vega-lite/v5.json',
 		description: 'Distance by day of the week for the three most tweeted activities.',
@@ -74,7 +74,7 @@ function parseTweets(runkeeper_tweets) {
 			color: { field: 'activityType', type: 'nominal', title: 'Activity type' }
 		}
 	};
- 
+
 	distance_vis_mean_spec = {
 		$schema: 'https://vega.github.io/schema/vega-lite/v5.json',
 		description: 'Mean distance by day of the week for the three most tweeted activities.',
@@ -86,16 +86,16 @@ function parseTweets(runkeeper_tweets) {
 			color: { field: 'activityType', type: 'nominal', title: 'Activity type' }
 		}
 	};
- 
+
 	vegaEmbed('#distanceVis', distance_vis_spec, { actions: false });
 	vegaEmbed('#distanceVisAggregated', distance_vis_mean_spec, { actions: false });
- 
+
 	const allChart = document.getElementById('distanceVis');
 	const meanChart = document.getElementById('distanceVisAggregated');
 	const button = document.getElementById('aggregate');
- 
+
 	meanChart.style.display = 'none';
- 
+
 	button.addEventListener('click', function () {
 		if (meanChart.style.display == 'none') {
 			allChart.style.display = 'none';
@@ -107,6 +107,7 @@ function parseTweets(runkeeper_tweets) {
 			button.innerText = 'Show means';
 		}
 	});
+}
 
 //Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function (event) {
