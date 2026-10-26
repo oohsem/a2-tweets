@@ -20,7 +20,8 @@ function parseTweets(runkeeper_tweets) {
 	let achievements = 0;
 	let miscellaneous = 0;
 	let written = 0;
- 
+	
+	//Counts the number of tweets of each type, and the earliest and latest tweet dates.
 	for (const tweet of tweet_array) {
 		if (tweet.time < earliest) {
 			earliest = tweet.time;
@@ -47,6 +48,7 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('firstDate').innerText = earliest.toLocaleDateString('en-US', dateFormat);
 	document.getElementById('lastDate').innerText = latest.toLocaleDateString('en-US', dateFormat);
  
+	//Calculates the percentages of each type of tweet, and updates the DOM with those values.
 	const total = tweet_array.length;
 	const format = { notation: 'fixed', precision: 2 };
 	const values = {

@@ -23,6 +23,7 @@ class Tweet {
         return this.writtenText != "";
     }
 
+    //returns the text written by the person tweeting, or an empty string if none exists.
     get writtenText() {
         if (this.source != "completed_event") {
             return "";
@@ -46,6 +47,8 @@ class Tweet {
         }
         return userText;
     }
+
+    //returns the type of activity completed, or "unknown" if it cannot be determined.
     get activityType() {
         if (this.source != "completed_event") {
             return "unknown";
@@ -69,6 +72,7 @@ class Tweet {
         }
         return activityWords.join(" ").toLowerCase();
     }
+    //returns the distance completed in miles, or 0 if it cannot be determined.
     get distance() {
         if (this.source != "completed_event") {
             return 0;

@@ -18,6 +18,7 @@ function parseTweets(runkeeper_tweets) {
 		}
 	}
 
+	//updates the DOM with the number of activities and the three most-tweeted activities.
 	const activityCounts = [];
 	for (const type in countsByType) {
 		activityCounts.push({ activityType: type, count: countsByType[type] });
